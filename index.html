@@ -49,10 +49,12 @@
             function httpGet(theUrl)
             {
                 var xmlHttp = new XMLHttpRequest();
-                xmlHttp.open( "POST", theUrl, false ); // false for synchronous request
+                xmlHttp.open( "POST", theUrl, true ); // false for synchronous request
                 var data = JSON.stringify({"email": "sadas"});
                 xmlHttp.send( data );
-                return xmlHttp.responseText;
+                xmlHttp.onreadystatechange = (e) => {
+                    console.log(xmlHttp.responseText)
+                }
             }
         </script>
     </div>
