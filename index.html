@@ -3,12 +3,12 @@
     <meta charset="UTF-8">
     <title>Query</title>
     <link rel="stylesheet" href="style.css">
-
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 </head>
 
 <body>
 <div class="first-box">
-    <input type = "text" id = "inp" name="inp" onclick="this.value='' " />
+    <textarea id = "inp" name="inp" ></textarea>
 </div>
 
 <div class="btn">
@@ -26,16 +26,22 @@
             function httpGet(theUrl)
             {
 
-                var str = document.getElementById("inp").value;
-                var xmlHttp = new XMLHttpRequest();
-                xmlHttp.open( "POST", theUrl, true ); // false for synchronous request
-                var data = JSON.stringify(str);
-                xmlHttp.send( data );
-                xmlHttp.onreadystatechange = (e) => {
-                    document.getElementById("out").value=xmlHttp.responseText;
-                }
-                //return xmlHttp.responseText;
 
+                var str = document.getElementById("inp").value;
+                var data = JSON.parse(str);
+
+                $.ajax({
+                        url: theUrl,
+                        type: 'POST',
+                        data: JSON.stringify(data),
+                        contentType: 'application/json; charset=utf-8',
+                        dataType: 'json',
+                        async: false,
+                        success: function(msg) {
+                            console.log(msg);
+                            document.getElementById("out").value=JSON.stringify(msg['hits']['hits'],null,2);
+                        }
+                });
 
             }
         </script>
@@ -43,7 +49,7 @@
 </div>
 
 <div class="second-box">
-    <input type="text" id= "out" name="out" onclick="this.value='' " />
+    <textarea id= "out" name="out" ></textarea>
 </div>
 
 </body>
