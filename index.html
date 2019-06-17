@@ -5,59 +5,47 @@
     <link rel="stylesheet" href="style.css">
 
 </head>
+
 <body>
-
-<div class="queryRight row">
-    <div class="col-xs-12 pd-r0 rightRow url-row">
-        <div class="form-group m-b15 form-element header-element">
-            <input
-                    type="text"
-                    class="form-control"
-                    placeholder="final url"
-                    [(ngModel)]="finalUrl"
-                    (keyup)="setPropIn()"
-            />
-        </div>
-    </div>
-    <div class="col-xs-12 pd-r0 codeMirror-container">
-        <div class="form-group">
-      <textarea
-              class="first-box"
-              name="editor"
-              id="editor"
-              cols="30"
-              rows="10"
-              float="left"
-      ></textarea>
-        </div>
-        <div class="form-group">
-      <textarea
-              class="second-box"
-              name="editor"
-              id="panel"
-              cols="30"
-              rows="10"
-
-
-      ></textarea>
-        </div>
-
-    </div>
-    <div class="run-row rightRow" [ngStyle]="{ bottom: getBottom() + 'px' }">
-        <button class="btn btn-theme" onclick=httpGet("http://127.0.0.1:5000/query")>Run Query</button>
-        <script type="text/javascript">
-            function httpGet(theUrl)
-            {
-                var xmlHttp = new XMLHttpRequest();
-                xmlHttp.open( "POST", theUrl, true ); // false for synchronous request
-                var data = JSON.stringify({"email": "sadas"});
-                xmlHttp.send( data );
-                xmlHttp.onreadystatechange = (e) => {
-                    console.log(xmlHttp.responseText)
-                }
-            }
-        </script>
-    </div>
+<div class="first-box">
+    <input type = "text" id = "inp" name="inp" onclick="this.value='' " />
 </div>
 
-<body>
+<div class="btn">
+    <button onclick=httpGet("http://127.0.0.1:5000/query")>Run Query</button>
+    <script type="text/javascript">
+                    function GetAndPostValue()
+                    {
+                        var str = document.getElementById("inp").value;
+                        document.getElementById("out").value=str;
+                    }
+            </script>
+
+
+    <script type="text/javascript">
+            function httpGet(theUrl)
+            {
+
+                var str = document.getElementById("inp").value;
+                var xmlHttp = new XMLHttpRequest();
+                xmlHttp.open( "POST", theUrl, true ); // false for synchronous request
+                var data = JSON.stringify(str);
+                xmlHttp.send( data );
+                xmlHttp.onreadystatechange = (e) => {
+                    document.getElementById("out").value=xmlHttp.responseText;
+                }
+                //return xmlHttp.responseText;
+
+
+            }
+        </script>
+
+</div>
+
+<div class="second-box">
+    <input type="text" id= "out" name="out" onclick="this.value='' " />
+</div>
+
+</body>
+
+

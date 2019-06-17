@@ -1,44 +1,15 @@
-@import url('https://fonts.googleapis.com/css?family=Baloo+Bhaijaan|Ubuntu');
-
-*{
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: 'Ubuntu', sans-serif;
-}
-
 body{
-  background: #2196F3;
+  background: #BFBDBD;
   margin: 0 10px;
-}
-
-.form .label{
-  display: block;
-  color: #555555;
-  margin-bottom: 6px;
-}
-
-.input{
-  padding: 13px 0px 13px 25px;
-  width: 100%;
-  text-align: center;
-  border: 2px solid #dddddd;
-  border-radius: 5px;
-  letter-spacing: 1px;
-  word-spacing: 3px;
-  outline: none;
-  font-size: 16px;
-  color: #555555;
 }
 
 .first-box {
   width:300px;
   float:left;
   background: white;
-  height: 200px;
+  height: 250px;
   margin: 50px
 }
-
 .second-box {
   width:600px;
   height: 600px;
@@ -47,46 +18,12 @@ body{
   margin: 50px
 }
 
-
-.space{
-  margin-bottom: 20px;
-}
-
-.icon-relative{
-  position: relative;
-}
-
-.icon-relative .fas,
-.icon-relative .far{
-  position: absolute;
-  bottom: 12px;
-  left: 15px;
-  font-size: 20px;
-  color: #555555;
-}
-
 .btn{
-  margin-top: 50px;
-  background: #2196F3;
+  margin-top: 10px;
+  background: white;
   padding: 12px;
   text-align: center;
-  color: #f8f8f8;
-  border-radius: 5px;
-  cursor: pointer;
   float:left;
   margin: 50px
 
-}
-
-@media screen and (max-width: 420px){
-  .card-grp{
-    flex-direction: column;
-  }
-  .card-item{
-    width: 100%;
-    margin-bottom: 20px;
-  }
-  .btn{
-    margin-top: 20px;
-  }
 }
