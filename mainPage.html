@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Query Editor</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div class="container">
+    <h2>Build a Query !</h2>
+    <form>
+        <div class="form-group">
+            <textarea class="form-control" rows="20" columns="25" id="myTextArea" onchange="prettyPrint()">
+                {"query": {"filtered": {"filter": {"bool": {"must": []}}}}}
+            </textarea>
+        </div>
+    </form>
+</div>
+
+
+<script>
+
+    function prettyPrint() {
+        var ugly = document.getElementById('myTextArea').value;
+        var obj = JSON.parse(ugly);
+        var pretty = JSON.stringify(obj, undefined, 4);
+        document.getElementById('myTextArea').value = pretty;
+    }
+</script>
+
+</body>
+</html>
