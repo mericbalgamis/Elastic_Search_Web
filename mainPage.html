@@ -8,22 +8,33 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 
+
 </head>
 
 <body>
 <script>
 function queries()
 {
-    var querySelected=document.getElementById("list");
-    document.getElementById("output").value=list.options[list.selectedIndex].text;
+
+    var querySelected=document.getElementById("list").selectedIndex;
+
+    if(querySelected == 0){
+        jsonObject = JSON.parse('{"query": {"match" : {"message" : "this is a test"}}}');
+        document.getElementById("myTextArea").value = JSON.stringify(jsonObject, undefined, 4);
+    }
+    else if(querySelected == 1){
+        jsonObject = JSON.parse('{"query": {"match_phrase" : {"message" : "this is a test"}}}');
+        document.getElementById("myTextArea").value = JSON.stringify(jsonObject, undefined, 4);
+    }
 }
+
 </script>
 
 <form>
     Select query
     <select id="list" onchange="queries()">
-        <option>query1</option>
-        <option>query2</option>
+        <option>Match Query</option>
+        <option>Match Phrase Query</option>
         <option>query3</option>
         <option>query4</option>
         <option>query5</option>
@@ -37,7 +48,9 @@ function queries()
     <h2>Build a Query !</h2>
     <form>
         <div class="form-group">
-            <textarea class="form-control" rows="20" columns="25" id="myTextArea" onchange="prettyPrint()">{"query": {"filtered": {"filter": {"bool": {"must": []}}}}}</textarea>
+            <textarea class="form-control" rows="20" columns="25" id="myTextArea" onchange="prettyPrint()">
+
+            </textarea>
         </div>
     </form>
 </div>
