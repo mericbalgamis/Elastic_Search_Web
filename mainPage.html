@@ -7,19 +7,79 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+
 </head>
+
 <body>
+<script>
+function queries(){
+
+    var querySelected=document.getElementById("list").selectedIndex;
+
+    if(querySelected == 0){
+        jsonObject = JSON.parse('{"query": {"match" : {"message" : "this is a test"}}}');
+        document.getElementById("myTextArea").value = JSON.stringify(jsonObject, undefined, 4);
+    }
+    else if(querySelected == 1){
+        jsonObject = JSON.parse('{"query": {"match_phrase" : {"message" : "this is a test"}}}');
+        document.getElementById("myTextArea").value = JSON.stringify(jsonObject, undefined, 4);
+    }
+    else if(querySelected == 2){
+        jsonObject = JSON.parse('{"query": {"match_phrase_prefix" : {"message" : "this is a test"}}}');
+        document.getElementById("myTextArea").value = JSON.stringify(jsonObject, undefined, 4);
+    }
+    else if(querySelected == 3){
+        jsonObject = JSON.parse('{"query": {"match_boolean_prefix_query" : {"message" : "this is a test"}}}');
+        document.getElementById("myTextArea").value = JSON.stringify(jsonObject, undefined, 4);
+    }
+    else if(querySelected == 4){
+        jsonObject = JSON.parse('{"query": {"multi_match_query" : {"message" : "this is a test"}}}');
+        document.getElementById("myTextArea").value = JSON.stringify(jsonObject, undefined, 4);
+    }
+    else if(querySelected == 5){
+        jsonObject = JSON.parse('{"query": {"common_terms_query" : {"message" : "this is a test"}}}');
+        document.getElementById("myTextArea").value = JSON.stringify(jsonObject, undefined, 4);
+    }
+    else if(querySelected == 6){
+        jsonObject = JSON.parse('{"query": {"query_string_query" : {"message" : "this is a test"}}}');
+        document.getElementById("myTextArea").value = JSON.stringify(jsonObject, undefined, 4);
+    }
+}
+
+</script>
+
+<form>
+    Select query
+    <select id="list" onchange="queries()">
+        <option>Match Query</option>
+        <option>Match Phrase Query</option>
+        <option>Match Phrase Prefix Query</option>
+        <option>Match Boolean Prefix Query</option>
+        <option>Multi Match Query</option>
+        <option>Common Terms Query</option>
+        <option>Query String Query</option>
+    </select>
+    <p>
+        Selected query is <input type="text" id="output" size="20">
+    </p>
+</form>
 
 <div class="container">
     <h2>Build a Query !</h2>
     <form>
         <div class="form-group">
             <textarea class="form-control" rows="20" columns="25" id="myTextArea" onchange="prettyPrint()">
-                {"query": {"filtered": {"filter": {"bool": {"must": []}}}}}
+
             </textarea>
         </div>
     </form>
 </div>
+
+<div class="button5">
+    <button onclick=prettyPrint()>Run Query</button>
+</div>
+
 
 
 <script>
