@@ -7,51 +7,16 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="style.css">
 
 
 </head>
 
 <body>
-<script>
-function queries(){
-
-    var querySelected=document.getElementById("list").selectedIndex;
-
-    if(querySelected == 0){
-        jsonObject = JSON.parse('{"query": {"match" : {"message" : "this is a test"}}}');
-        document.getElementById("myTextArea").value = JSON.stringify(jsonObject, undefined, 4);
-    }
-    else if(querySelected == 1){
-        jsonObject = JSON.parse('{"query": {"match_phrase" : {"message" : "this is a test"}}}');
-        document.getElementById("myTextArea").value = JSON.stringify(jsonObject, undefined, 4);
-    }
-    else if(querySelected == 2){
-        jsonObject = JSON.parse('{"query": {"match_phrase_prefix" : {"message" : "this is a test"}}}');
-        document.getElementById("myTextArea").value = JSON.stringify(jsonObject, undefined, 4);
-    }
-    else if(querySelected == 3){
-        jsonObject = JSON.parse('{"query": {"match_boolean_prefix_query" : {"message" : "this is a test"}}}');
-        document.getElementById("myTextArea").value = JSON.stringify(jsonObject, undefined, 4);
-    }
-    else if(querySelected == 4){
-        jsonObject = JSON.parse('{"query": {"multi_match_query" : {"message" : "this is a test"}}}');
-        document.getElementById("myTextArea").value = JSON.stringify(jsonObject, undefined, 4);
-    }
-    else if(querySelected == 5){
-        jsonObject = JSON.parse('{"query": {"common_terms_query" : {"message" : "this is a test"}}}');
-        document.getElementById("myTextArea").value = JSON.stringify(jsonObject, undefined, 4);
-    }
-    else if(querySelected == 6){
-        jsonObject = JSON.parse('{"query": {"query_string_query" : {"message" : "this is a test"}}}');
-        document.getElementById("myTextArea").value = JSON.stringify(jsonObject, undefined, 4);
-    }
-}
-
-</script>
 
 <form>
     Select query
-    <select id="list" onchange="queries()">
+    <select id="list" onclick="queries()">
         <option>Match Query</option>
         <option>Match Phrase Query</option>
         <option>Match Phrase Prefix Query</option>
@@ -60,36 +25,85 @@ function queries(){
         <option>Common Terms Query</option>
         <option>Query String Query</option>
     </select>
-    <p>
-        Selected query is <input type="text" id="output" size="20">
-    </p>
+
 </form>
 
-<div class="container">
-    <h2>Build a Query !</h2>
-    <form>
-        <div class="form-group">
-            <textarea class="form-control" rows="20" columns="25" id="myTextArea" onchange="prettyPrint()">
-
-            </textarea>
-        </div>
-    </form>
+<div class="inline-div">
+    <p align="center">Build a Query ! </p>
+    <textarea id="myTextArea" onchange="prettyPrint()" cols="100" rows="300" class="inline-txtarea"></textarea>
+</div>
+<div class="inline-div">
+    <p align="center">Here is the Result</p>
+    <textarea id="resultArea" cols="100" rows="300" class="inline-txtarea"></textarea>
 </div>
 
-<div class="button5">
-    <button onclick=prettyPrint()>Run Query</button>
+<div>
+    <button onclick=httpGet("http://127.0.0.1:5000/query")>Run Query</button>
 </div>
 
-
-
-<script>
+<script type="text/javascript">
 
     function prettyPrint() {
-        var ugly = document.getElementById('myTextArea').value;
-        var obj = JSON.parse(ugly);
-        var pretty = JSON.stringify(obj, undefined, 4);
-        document.getElementById('myTextArea').value = pretty;
+        console.log("girdi");
+        var ugly = document.getElementById("myTextArea").value;
+        console.log(document.getElementById("myTextArea").value);
+        const obj = JSON.parse(ugly);
+        const pretty = JSON.stringify(obj, undefined, 4);
+        document.getElementById("myTextArea").value = pretty;
     }
+
+    function httpGet(theUrl)
+    {
+        var str = document.getElementById("myTextArea").value;
+        var data = JSON.parse(str);
+        $.ajax({
+            url: theUrl,
+            type: 'POST',
+            data: JSON.stringify(data),
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            async: false,
+            success: function(msg) {
+                console.log(msg);
+                document.getElementById("resultArea").value=JSON.stringify(msg['hits']['hits'],null,2);
+            }
+        });
+    }
+
+    function queries(){
+
+        var querySelected=document.getElementById("list").selectedIndex;
+        console.log(querySelected);
+        if(querySelected == 0){
+            var jsonObject = JSON.parse('{"query": {"match" : {"message" : "this is a test"}}}');
+            document.getElementById("myTextArea").value = JSON.stringify(jsonObject, undefined, 4);
+        }
+        else if(querySelected == 1){
+            var jsonObject = JSON.parse('{"query": {"match_phrase" : {"message" : "this is a test"}}}');
+            document.getElementById("myTextArea").value = JSON.stringify(jsonObject, undefined, 4);
+        }
+        else if(querySelected == 2){
+            var jsonObject = JSON.parse('{"query": {"match_phrase_prefix" : {"message" : "this is a test"}}}');
+            document.getElementById("myTextArea").value = JSON.stringify(jsonObject, undefined, 4);
+        }
+        else if(querySelected == 3){
+            var jsonObject = JSON.parse('{"query": {"match_boolean_prefix_query" : {"message" : "this is a test"}}}');
+            document.getElementById("myTextArea").value = JSON.stringify(jsonObject, undefined, 4);
+        }
+        else if(querySelected == 4){
+            var jsonObject = JSON.parse('{"query": {"multi_match_query" : {"message" : "this is a test"}}}');
+            document.getElementById("myTextArea").value = JSON.stringify(jsonObject, undefined, 4);
+        }
+        else if(querySelected == 5){
+            var jsonObject = JSON.parse('{"query": {"common_terms_query" : {"message" : "this is a test"}}}');
+            document.getElementById("myTextArea").value = JSON.stringify(jsonObject, undefined, 4);
+        }
+        else if(querySelected == 6){
+            var jsonObject = JSON.parse('{"query": {"query_string_query" : {"message" : "this is a test"}}}');
+            document.getElementById("myTextArea").value = JSON.stringify(jsonObject, undefined, 4);
+        }
+    }
+
 </script>
 
 </body>

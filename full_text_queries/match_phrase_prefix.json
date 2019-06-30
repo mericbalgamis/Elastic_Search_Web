@@ -1,0 +1,7 @@
+{
+  "query": {
+    "match_phrase_prefix" : {
+      "message" : "this is a test"
+    }
+  }
+}
