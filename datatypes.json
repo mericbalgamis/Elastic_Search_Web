@@ -1,0 +1,50 @@
+{
+  "image type": {
+    "title": "Image Type",
+    "type": "String",
+     "enum": [
+      "DERIVED",
+      "SECONDARY",
+      "OTHER",
+       "SHM"
+    ]
+  },
+  "instance creation date": {
+    "title": "Instance Creation Date",
+    "type": "Date"
+
+  },
+
+  "instance creation time": {
+    "title": "instance creation time",
+    "type": "time"
+  },
+    "sop class uid ": {
+    "title": "SOP Class UID ",
+    "type": "String"
+  },
+    "sop instance uid": {
+    "title": "SOP Instance UID",
+    "type": "String"
+  },
+    "study date": {
+    "title": "Study Date",
+    "type": "Date"
+  },
+    "content date": {
+    "title": "Content Date",
+    "type": "Date"
+  },
+    "study time ": {
+    "title": "Study Time ",
+    "type": "Time"
+  },
+    "accession number": {
+    "title": "Accession Number",
+    "type": "String"
+  },
+    "modality": {
+    "title": "Modality",
+    "type": "String"
+  }
+  }

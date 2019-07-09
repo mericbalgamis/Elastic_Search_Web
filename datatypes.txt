@@ -1,0 +1,12 @@
+Image_Type String (DERIVED,SECONDARY,OTHER,SHM)
+Instance_Creation_Date Date
+Instance_Creation_Time Time
+SOP_Class_UID Unique Identifier
+SOP_Instance_UID Unique Identifier
+Study_Date Date
+Content_Date Date
+Study_Time Time
+Accession_Number String
+Modality String
+
+

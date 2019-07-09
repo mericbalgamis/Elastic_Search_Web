@@ -8,38 +8,101 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="deps/opt/bootstrap.css"/>
 
 
 </head>
 
 <body>
+<div class="row">
+    <div class="column">
 
-<form>
-    Select query
-    <select id="list" onclick="queries()">
-        <option>Match Query</option>
-        <option>Match Phrase Query</option>
-        <option>Match Phrase Prefix Query</option>
-        <option>Match Boolean Prefix Query</option>
-        <option>Multi Match Query</option>
-        <option>Common Terms Query</option>
-        <option>Query String Query</option>
-    </select>
 
-</form>
+        <form>
+            <div id="res" class="alert"></div>
+            <script type="text/javascript" src="deps/jquery.min.js"></script>
+            <script type="text/javascript" src="deps/underscore.js"></script>
+            <script type="text/javascript" src="deps/opt/jsv.js"></script>
+            <script type="text/javascript" src="lib/jsonform.js"></script>
+            <script type="text/javascript">
+                $('form').jsonForm({
+                    schema: {
+                        "image type": {
+                            "title": "Image Type",
+                            "type": "string",
+                            "enum": [
+                                "DERIVED",
+                                "SECONDARY",
+                                "OTHER",
+                                "SHM"
+                            ]
+                        },
+                        "instance creation date": {
+                            "title": "Instance Creation Date",
+                            "type": "date"
 
-<div class="inline-div">
-    <p align="center">Build a Query ! </p>
-    <textarea id="myTextArea" onchange="prettyPrint()" cols="100" rows="300" class="inline-txtarea"></textarea>
+                        },
+
+                        "instance creation time": {
+                            "title": "instance creation time",
+                            "type": "time"
+                        },
+                        "sop class uid ": {
+                            "title": "SOP Class UID ",
+                            "type": "string"
+                        },
+                        "sop instance uid": {
+                            "title": "SOP Instance UID",
+                            "type": "string"
+                        },
+                        "study date": {
+                            "title": "Study Date",
+                            "type": "date"
+                        },
+                        "content date": {
+                            "title": "Content Date",
+                            "type": "date"
+                        },
+                        "study time ": {
+                            "title": "Study Time ",
+                            "type": "time"
+                        },
+                        "accession number": {
+                            "title": "Accession Number",
+                            "type": "string"
+                        },
+                        "modality": {
+                            "title": "Modality",
+                            "type": "string"
+                        }
+                    },
+                    onSubmit: function (errors, values) {
+                        if (errors) {
+                            $('#res').html('<p>I beg your pardon?</p>');
+                        } else {
+                            $('#res').html('<p>Hello ' + values.name + '.' +
+                                (values.age ? '<br/>You are ' + values.age + '.' : '') +
+                                '</p>');
+                        }
+                    }
+                });
+            </script>
+        </form>
+    </div>
+
+    <div class="column">
+        <div class="inline-div">
+            <p align="center">Build a Query ! </p>
+            <textarea id="myTextArea" onchange="prettyPrint()" cols="100" rows="300" class="inline-txtarea"></textarea>
+        </div>
+
+        <div>
+            <button onclick=httpGet("http://127.0.0.1:5000/query")>Run Query</button>
+        </div>
+    </div>
+
 </div>
-<div class="inline-div">
-    <p align="center">Here is the Result</p>
-    <textarea id="resultArea" cols="100" rows="300" class="inline-txtarea"></textarea>
-</div>
 
-<div>
-    <button onclick=httpGet("http://127.0.0.1:5000/query")>Run Query</button>
-</div>
 
 <script type="text/javascript">
 
@@ -52,8 +115,7 @@
         document.getElementById("myTextArea").value = pretty;
     }
 
-    function httpGet(theUrl)
-    {
+    function httpGet(theUrl) {
         var str = document.getElementById("myTextArea").value;
         var data = JSON.parse(str);
         $.ajax({
@@ -63,42 +125,36 @@
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',
             async: false,
-            success: function(msg) {
+            success: function (msg) {
                 console.log(msg);
-                document.getElementById("resultArea").value=JSON.stringify(msg['hits']['hits'],null,2);
+                document.getElementById("out").value = JSON.stringify(msg['hits']['hits'], null, 2);
             }
         });
     }
 
-    function queries(){
+    function queries() {
 
-        var querySelected=document.getElementById("list").selectedIndex;
+        var querySelected = document.getElementById("list").selectedIndex;
         console.log(querySelected);
-        if(querySelected == 0){
+        if (querySelected == 0) {
             var jsonObject = JSON.parse('{"query": {"match" : {"message" : "this is a test"}}}');
             document.getElementById("myTextArea").value = JSON.stringify(jsonObject, undefined, 4);
-        }
-        else if(querySelected == 1){
+        } else if (querySelected == 1) {
             var jsonObject = JSON.parse('{"query": {"match_phrase" : {"message" : "this is a test"}}}');
             document.getElementById("myTextArea").value = JSON.stringify(jsonObject, undefined, 4);
-        }
-        else if(querySelected == 2){
+        } else if (querySelected == 2) {
             var jsonObject = JSON.parse('{"query": {"match_phrase_prefix" : {"message" : "this is a test"}}}');
             document.getElementById("myTextArea").value = JSON.stringify(jsonObject, undefined, 4);
-        }
-        else if(querySelected == 3){
+        } else if (querySelected == 3) {
             var jsonObject = JSON.parse('{"query": {"match_boolean_prefix_query" : {"message" : "this is a test"}}}');
             document.getElementById("myTextArea").value = JSON.stringify(jsonObject, undefined, 4);
-        }
-        else if(querySelected == 4){
+        } else if (querySelected == 4) {
             var jsonObject = JSON.parse('{"query": {"multi_match_query" : {"message" : "this is a test"}}}');
             document.getElementById("myTextArea").value = JSON.stringify(jsonObject, undefined, 4);
-        }
-        else if(querySelected == 5){
+        } else if (querySelected == 5) {
             var jsonObject = JSON.parse('{"query": {"common_terms_query" : {"message" : "this is a test"}}}');
             document.getElementById("myTextArea").value = JSON.stringify(jsonObject, undefined, 4);
-        }
-        else if(querySelected == 6){
+        } else if (querySelected == 6) {
             var jsonObject = JSON.parse('{"query": {"query_string_query" : {"message" : "this is a test"}}}');
             document.getElementById("myTextArea").value = JSON.stringify(jsonObject, undefined, 4);
         }
