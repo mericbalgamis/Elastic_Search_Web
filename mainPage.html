@@ -27,6 +27,11 @@
         document.getElementById("myTextArea").value = pretty;
     }
 
+    function generateQuery(values) {
+
+        console.log(values);
+    }
+
     function readTextFile(file) {
             var rawFile = new XMLHttpRequest();
             rawFile.open("GET", file, false);
@@ -154,8 +159,10 @@
                         }
                     },
                     onSubmit: function (errors, values) {
-                        console.log(values);
                         document.getElementById("myTextArea").value = JSON.stringify(values);
+
+                        generateQuery(values);
+
                     }
                 });
 
